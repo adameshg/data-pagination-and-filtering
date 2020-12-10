@@ -1,22 +1,5 @@
-/*
-Treehouse Techdegree:
-FSJS Project 2 - Data Pagination and Filtering
-*/
 
-
-
-/*
-For assistance:
-   Check out the "Project Resources" section of the Instructions tab: https://teamtreehouse.com/projects/data-pagination-and-filtering#instructions
-   Reach out in your Slack community: https://treehouse-fsjs-102.slack.com/app_redirect?channel=unit-2
-*/
-
-
-
-/*
-Create the `showPage` function
-This function will create and insert/append the elements needed to display a "page" of nine students
-*/
+// Creates and displays items on a page
 function showPage(list, page) {
    const startIndex = (page * 9) - 9;
    const endIndex = page * 9;
@@ -40,10 +23,7 @@ function showPage(list, page) {
    }
 }
 
-/*
-Create the `addPagination` function
-This function will create and insert/append the elements needed for the pagination buttons
-*/
+// Creates and displays pagination buttons
 function addPagination(list) {
    const pages = Math.ceil(list.length / 9);
    const linkList = document.querySelector('.link-list');
@@ -57,9 +37,26 @@ function addPagination(list) {
    }
 }
 
-
-
-
 // Call functions
 showPage(data, 1);
 addPagination(data);
+
+// Sets class of first page button to 'active'
+document.querySelector('button').className = 'active';
+
+// Sets button class to 'active' when clicked
+function setActive(event) {
+   for (let i = 0; i < document.querySelectorAll('.link-list button').length; i++) {
+      document.querySelectorAll('.link-list button')[i].classList.remove('active');
+   }
+   const click = event.target;
+   click.classList.add('active');
+}
+
+// Update page content when button is clicked
+document.querySelector('.link-list').addEventListener('click', event => {
+   if (event.target.nodeName === 'BUTTON') {
+      showPage(data, `${event.target.innerHTML}`);
+      setActive(event);
+   }
+})

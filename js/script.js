@@ -82,7 +82,7 @@ document.querySelector('header').innerHTML += `
 </label>
 `;
 
-// 
+// Filters results from search bar input
 function searchBar() {
    let li = document.querySelectorAll('.student-item');
    let filter = document.getElementById('search').value.toUpperCase();

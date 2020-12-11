@@ -1,9 +1,14 @@
+// Declare variables
+const studentList = document.querySelector('.student-list');
+const linkList = document.querySelector('.link-list');
 
 // Creates and displays items on a page
 function showPage(list, page) {
+   // First list item to be displayed
    const startIndex = (page * 9) - 9;
+   // Last list item to be displayed
    const endIndex = page * 9;
-   const studentList = document.querySelector('.student-list');
+   // Generates HTML for student cards
    studentList.innerHTML = '';
    for (let i = 0; i < list.length; i++) {
       if (i >= startIndex && i < endIndex) {
@@ -25,8 +30,11 @@ function showPage(list, page) {
 
 // Creates and displays pagination buttons
 function addPagination(list) {
+   /* Determines number of pagination buttons by dividing number of data 
+   points by number of items per page */
    const pages = Math.ceil(list.length / 9);
-   const linkList = document.querySelector('.link-list');
+   
+   // Generates HTML for pagination buttons
    linkList.innerHTML = '';
    for (let i = 1; i <= pages; i++) {
       linkList.innerHTML += `
@@ -46,17 +54,47 @@ document.querySelector('button').className = 'active';
 
 // Sets button class to 'active' when clicked
 function setActive(event) {
+   // Clears 'active' class from any previously active button
    for (let i = 0; i < document.querySelectorAll('.link-list button').length; i++) {
       document.querySelectorAll('.link-list button')[i].classList.remove('active');
    }
+   // Attaches 'active' class only to event target
    const click = event.target;
    click.classList.add('active');
 }
 
-// Update page content when button is clicked
-document.querySelector('.link-list').addEventListener('click', event => {
+// Updates page content when button is clicked
+linkList.addEventListener('click', event => {
+   /* Tests if target is a button within '.link-list' ul;
+   If truthy, changes items listed to corresponding page number and sets
+   clicked button class to 'active' */
    if (event.target.nodeName === 'BUTTON') {
       showPage(data, `${event.target.innerHTML}`);
       setActive(event);
    }
 })
+
+// Creates and displays search bar
+document.querySelector('header').innerHTML += `
+<label for="search" class="student-search">
+   <input type="search" id="search" placeholder="Search by name...">
+   <button type="button"><img src="img/icn-search.svg" alt="Search icon"></button>
+</label>
+`;
+
+// 
+function searchBar() {
+   let li = document.querySelectorAll('.student-item');
+   let filter = document.getElementById('search').value.toUpperCase();
+
+   for (let i = 0; i < li.length; i++) {
+      let name = li[i].getElementsByTagName('h3')[0].textContent;
+      if (name.toUpperCase().indexOf(filter) > -1) {
+         li[i].style.display = '';
+      } else {
+         li[i].style.display = 'none';
+      }
+   }
+}
+
+searchBar();

@@ -4,10 +4,13 @@ const linkList = document.querySelector('.link-list');
 
 // Creates and displays items on a page
 function showPage(list, page) {
+   
    // First list item to be displayed
    const startIndex = (page * 9) - 9;
+   
    // Last list item to be displayed
    const endIndex = page * 9;
+   
    // Generates HTML for student cards
    studentList.innerHTML = '';
    for (let i = 0; i < list.length; i++) {
@@ -28,10 +31,9 @@ function showPage(list, page) {
    }
 }
 
-// Creates and displays pagination buttons
+/* Creates and displays pagination buttons by dividing
+number of data points by number of items per page */
 function addPagination(list) {
-   /* Determines number of pagination buttons by dividing number of data 
-   points by number of items per page */
    const pages = Math.ceil(list.length / 9);
    
    // Generates HTML for pagination buttons
@@ -54,6 +56,7 @@ document.querySelector('button').className = 'active';
 
 // Sets button class to 'active' when clicked
 function setActive(event) {
+   
    // Clears 'active' class from any previously active button
    for (let i = 0; i < document.querySelectorAll('.link-list button').length; i++) {
       document.querySelectorAll('.link-list button')[i].classList.remove('active');
@@ -65,6 +68,7 @@ function setActive(event) {
 
 // Updates page content when button is clicked
 linkList.addEventListener('click', event => {
+   
    /* Tests if target is a button within '.link-list' ul;
    If truthy, changes items listed to corresponding page number and sets
    clicked button class to 'active' */
@@ -82,6 +86,7 @@ document.querySelector('header').innerHTML += `
 </label>
 `;
 
+// Declare variable to store search bar
 const filter = document.getElementById('search');
 
 // Filters results from search bar input
@@ -89,6 +94,8 @@ function searchBar() {
    const li = document.getElementById('student-list').getElementsByTagName('li');
    const filterName = filter.value.toUpperCase();
 
+   /* Loops through only items on current page; filters/displays
+   student items whose h3 matches the search input */
    for (let i = 0; i < li.length; i++) {
       let name = li[i].children[0].children[1].innerHTML;
       if (name.toUpperCase().includes(filterName)) {
@@ -99,4 +106,5 @@ function searchBar() {
    }
 }
 
-filter.addEventListener('keyup', searchBar);
+// Targets search bar to listen for input
+filter.addEventListener('input', searchBar);

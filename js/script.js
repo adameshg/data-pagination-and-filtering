@@ -1,6 +1,7 @@
 // Declare variables
 const studentList = document.querySelector('.student-list');
 const linkList = document.querySelector('.link-list');
+const filter = document.getElementById('search');
 
 // Creates and displays items on a page
 function showPage(list, page) {
@@ -78,18 +79,18 @@ linkList.addEventListener('click', event => {
 document.querySelector('header').innerHTML += `
 <label for="search" class="student-search">
    <input type="search" id="search" placeholder="Search by name...">
-   <button type="button"><img src="img/icn-search.svg" alt="Search icon"></button>
+   <button type="button" onkeyup="searchBar()"><img src="img/icn-search.svg" alt="Search icon"></button>
 </label>
 `;
 
 // Filters results from search bar input
 function searchBar() {
-   let li = document.querySelectorAll('.student-item');
-   let filter = document.getElementById('search').value.toUpperCase();
+   const li = document.getElementById('student-list').getElementsByTagName('li');
+   const filterName = filter.value.toUpperCase();
 
    for (let i = 0; i < li.length; i++) {
-      let name = li[i].getElementsByTagName('h3')[0].textContent;
-      if (name.toUpperCase().indexOf(filter) > -1) {
+      let name = li[i].children[0].children[1].innerHTML;
+      if (name.toUpperCase().includes(filterName)) {
          li[i].style.display = '';
       } else {
          li[i].style.display = 'none';
@@ -97,4 +98,4 @@ function searchBar() {
    }
 }
 
-searchBar();
+filter.addEventListener('keyup', searchBar);

@@ -1,7 +1,6 @@
 // Declare variables
 const studentList = document.querySelector('.student-list');
 const linkList = document.querySelector('.link-list');
-const filter = document.getElementById('search');
 
 // Creates and displays items on a page
 function showPage(list, page) {
@@ -82,6 +81,8 @@ document.querySelector('header').innerHTML += `
    <button type="button" onkeyup="searchBar()"><img src="img/icn-search.svg" alt="Search icon"></button>
 </label>
 `;
+
+const filter = document.getElementById('search');
 
 // Filters results from search bar input
 function searchBar() {

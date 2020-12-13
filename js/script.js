@@ -2,6 +2,24 @@
 const studentList = document.querySelector('.student-list');
 const linkList = document.querySelector('.link-list');
 
+// Creates and displays search bar
+document.querySelector('header').innerHTML += `
+<label for="search" class="student-search">
+   <input type="search" id="search" placeholder="Search by name...">
+   <button type="button" onkeyup="searchBar()"><img src="img/icn-search.svg" alt="Search icon"></button>
+</label>
+`;
+
+// Declare variable to store search bar
+const filter = document.getElementById('search');
+
+let searchTerm = '';
+
+filter.addEventListener('input', event => {
+   searchTerm = event.target.value;
+   (showPage(data, 1));
+});
+
 // Creates and displays items on a page
 function showPage(list, page) {
    
@@ -13,22 +31,25 @@ function showPage(list, page) {
    
    // Generates HTML for student cards
    studentList.innerHTML = '';
-   for (let i = 0; i < list.length; i++) {
+
+   // TODO: Once foreach loop works, add filter method beforehand to filter search results
+   // Loops through student data at multiples of 9, per page limit
+   list.forEach((student, i) => {
       if (i >= startIndex && i < endIndex) {
          studentList.innerHTML += `
          <li class="student-item">
             <div class="student-details">
-               <img class="avatar" src="${list[i].picture.large}" alt="${list[i].name.first} ${list[i].name.last}">
-               <h3>${list[i].name.first} ${list[i].name.last}</h3>
-               <p class="email">${list[i].email}</p>
+               <img class="avatar" src="${student[i].picture.large}" alt="${student[i].name.first} ${student[i].name.last}">
+               <h3>${student[i].name.first} ${student[i].name.last}</h3>
+               <p class="email">${student[i].email}</p>
             </div>
             <div>
-               <p class="date">Joined ${list[i].registered.date}</p>
+               <p class="date">Joined ${student[i].registered.date}</p>
             </div>
          </li>
       `;
       }
-   }
+   });
 }
 
 /* Creates and displays pagination buttons by dividing
@@ -77,34 +98,3 @@ linkList.addEventListener('click', event => {
       setActive(event);
    }
 })
-
-// Creates and displays search bar
-document.querySelector('header').innerHTML += `
-<label for="search" class="student-search">
-   <input type="search" id="search" placeholder="Search by name...">
-   <button type="button" onkeyup="searchBar()"><img src="img/icn-search.svg" alt="Search icon"></button>
-</label>
-`;
-
-// Declare variable to store search bar
-const filter = document.getElementById('search');
-
-// Filters results from search bar input
-function searchBar() {
-   const li = document.getElementById('student-list').getElementsByTagName('li');
-   const filterName = filter.value.toUpperCase();
-
-   /* Loops through only items on current page; filters/displays
-   student items whose h3 matches the search input */
-   for (let i = 0; i < li.length; i++) {
-      let name = li[i].children[0].children[1].innerHTML;
-      if (name.toUpperCase().includes(filterName)) {
-         li[i].style.display = '';
-      } else {
-         li[i].style.display = 'none';
-      }
-   }
-}
-
-// Targets search bar to listen for input
-filter.addEventListener('input', searchBar);

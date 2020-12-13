@@ -20,7 +20,7 @@ filter.addEventListener('input', event => {
    (showPage(data, 1));
 });
 
-// Creates and displays items on a page
+// Creates and displays items on a page; creates search filter functionality
 function showPage(list, page) {
    
    // First list item to be displayed
@@ -32,19 +32,22 @@ function showPage(list, page) {
    // Generates HTML for student cards
    studentList.innerHTML = '';
 
-   // TODO: Once foreach loop works, add filter method beforehand to filter search results
    // Loops through student data at multiples of 9, per page limit
-   list.forEach((student, i) => {
+   list
+   .filter(student =>
+      student.name.first.toUpperCase().includes(searchTerm.toUpperCase())
+   )
+   .forEach((student, i) => {
       if (i >= startIndex && i < endIndex) {
          studentList.innerHTML += `
          <li class="student-item">
             <div class="student-details">
-               <img class="avatar" src="${student[i].picture.large}" alt="${student[i].name.first} ${student[i].name.last}">
-               <h3>${student[i].name.first} ${student[i].name.last}</h3>
-               <p class="email">${student[i].email}</p>
+               <img class="avatar" src="${student.picture.large}" alt="${student.name.first} ${student.name.last}">
+               <h3>${student.name.first} ${student.name.last}</h3>
+               <p class="email">${student.email}</p>
             </div>
             <div>
-               <p class="date">Joined ${student[i].registered.date}</p>
+               <p class="date">Joined ${student.registered.date}</p>
             </div>
          </li>
       `;

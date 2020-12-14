@@ -32,7 +32,7 @@ function showPage(list, page) {
    // Generates HTML for student cards
    studentList.innerHTML = '';
 
-   // Loops through student data at multiples of 9, per page limit
+   // Loops through student data at multiples of 9, per page limit; adds filter functionality
    list
    .filter(student =>
       student.name.first.toUpperCase().includes(searchTerm.toUpperCase())
@@ -76,7 +76,7 @@ showPage(data, 1);
 addPagination(data);
 
 // Sets class of first page button to 'active'
-document.querySelector('button').className = 'active';
+document.querySelectorAll('button')[1].className = 'active';
 
 // Sets button class to 'active' when clicked
 function setActive(event) {
